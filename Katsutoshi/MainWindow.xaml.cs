@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Katsutoshi.Pages;
+using Katsutoshi.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,18 @@ namespace Katsutoshi
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            NavigateToDrivesPage();
+        }
+
+        private void NavigateToDrivesPage()
+        {
+            DrivesPage drivesPage = new DrivesPage();
+            MainFrame.Navigate(drivesPage);
         }
     }
 }
