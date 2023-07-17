@@ -5,8 +5,138 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Katsutoshi"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
-    </Grid>
+        WindowStyle="None"
+        Title="MainWindow"
+        Height="450"
+        Width="800">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32"
+                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Border Style="{DynamicResource WindowMainPanelStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Click="OnMinimizeButtonClick"
+                    Grid.Column="2"
+                    RenderOptions.EdgeMode="Aliased"
+                    Style="{DynamicResource TitleBarButtonStyle}"
+                    Height="32"
+                    VerticalAlignment="Center">
+                <Path Width="46"
+                      Height="32"
+                      Data="M 18,15 H 28"
+                      Stroke="Black"
+                      StrokeThickness="1" />
+            </Button>
+            <Button Name="maximizeButton"
+                    Grid.Column="3"
+                    Click="OnMaximizeRestoreButtonClick"
+                    Style="{DynamicResource TitleBarButtonStyle}"
+                    Height="32"
+                    VerticalAlignment="Center">
+                <Path Width="46"
+                      Height="32"
+                      Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
+                      Stroke="Black"
+                      StrokeThickness="1" />
+            </Button>
+            <Button Name="restoreButton"
+                    Grid.Column="3"
+                    Click="OnMaximizeRestoreButtonClick"
+                    Style="{DynamicResource TitleBarButtonStyle}"
+                    Height="32"
+                    VerticalAlignment="Center"
+                    Visibility="Hidden">
+                <Path Width="46"
+                      Height="32"
+                      Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
+                      Stroke="Black"
+                      StrokeThickness="1" />
+            </Button>
+            <Button Click="OnCloseButtonClick"
+                    Grid.Column="4"
+                    Style="{DynamicResource TitleBarButtonStyle}"
+                    Height="32"
+                    VerticalAlignment="Center">
+                <Path Width="46"
+                      Height="32"
+                      Data="M 18,11 27,20 M 18,20 27,11"
+                      Stroke="Black"
+                      StrokeThickness="1" />
+            </Button>
+            <Frame x:Name="MainFrame"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="4"
+                   Grid.Row="1"
+                   NavigationUIVisibility="Hidden" />
+        </Grid>
+    </Border>
+    <Window.Resources>
+        <Style x:Key="TitleBarButtonStyle"
+               TargetType="Button">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource WindowTextBrush}" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+                    Value="True" />
+            <Setter Property="IsTabStop"
+                    Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Margin="0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Focusable="False"
+                                              RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="true">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF575757" />
+                            </Trigger>
+                            <Trigger Property="IsPressed"
+                                     Value="true">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="Gray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="WindowMainPanelStyle"
+               TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource WindowBorderBrush}" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}"
+                             Value="Maximized">
+                    <Setter Property="BorderThickness"
+                            Value="0" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 </Window>
