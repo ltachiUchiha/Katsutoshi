@@ -26,6 +26,16 @@ namespace Katsutoshi
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             NavigateToDrivesPage();
+
+            var args = Environment.GetCommandLineArgs();
+            bool debugMode = args.Length > 1 ? args[1] == "debug" : false;
+            //string mode = "debug";
+            if (debugMode)
+            {
+                AllocConsole();
+
+                Console.WriteLine("Run in debug mode");
+            }
         }
 
         private void NavigateToDrivesPage()
@@ -33,6 +43,12 @@ namespace Katsutoshi
             DrivesPage drivesPage = new DrivesPage();
             MainFrame.Navigate(drivesPage);
         }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool FreeConsole();
 
         // Maximize, minimize and close button control code
         #region TopPanel
