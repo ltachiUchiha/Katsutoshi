@@ -9,16 +9,20 @@ namespace Katsutoshi.Pages
     /// </summary>
     public partial class DrivesPage : Page
     {
+        private readonly DrivesViewModel _viewModel;
+
         public DrivesPage()
         {
             InitializeComponent();
-
+            _viewModel = new DrivesViewModel();
+            DataContext = _viewModel;
             Loaded += DrivesPage_Loaded;
         }
 
-        private void DrivesPage_Loaded(object sender, RoutedEventArgs e)
+        // Drives page loaded
+        private async void DrivesPage_Loaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new DrivesViewModel();
+            await _viewModel.LoadData();
         }
     }
 }
