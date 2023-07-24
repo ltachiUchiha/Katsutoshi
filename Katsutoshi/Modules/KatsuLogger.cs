@@ -29,7 +29,10 @@ namespace Katsutoshi.Modules
 
         private void LogConsole(LogCode logCode, string message)
         {
-            Console.WriteLine($"{LogType(logCode)} {message}");
+            SetConsoleColor(logCode);
+            Console.Write($"{LogType(logCode)}");
+            Console.ResetColor();
+            Console.WriteLine($" {message}");
         }
         private string LogType(LogCode logCode)
         {
@@ -45,6 +48,24 @@ namespace Katsutoshi.Modules
                     return "Fatal:";
             }
             return "Fatal:";
+        }
+        private void SetConsoleColor(LogCode logCode)
+        {
+            switch (logCode)
+            {
+                case LogCode.Info:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    return;
+                case LogCode.Warn:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    return;
+                case LogCode.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    return;
+                case LogCode.Fatal:
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    return;
+            }
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
