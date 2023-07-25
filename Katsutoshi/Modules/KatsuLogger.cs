@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,14 +11,31 @@ namespace Katsutoshi.Modules
     internal class KatsuLogger
     {
         private bool _debugConsole;
+        private bool _fileLogging = true;
 
         public KatsuLogger() 
         {
-            _debugConsole = (bool)App.Current.Properties["debugMode"];
-
-            if(_debugConsole)
+            try
             {
-                AllocConsole();
+                _debugConsole = (bool)App.Current.Properties["debugMode"];
+
+                if(_debugConsole)
+                {
+                    AllocConsole();
+                }
+
+                if (_fileLogging)
+                {
+                    string path = Directory.GetCurrentDirectory() + "\\logs";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(LogCode.Error, ex.Message);
             }
         }
 
@@ -30,11 +48,12 @@ namespace Katsutoshi.Modules
         private void LogConsole(LogCode logCode, string message)
         {
             SetConsoleColor(logCode);
-            Console.Write($"{LogType(logCode)}");
+            Console.Write($"{LogTypeToString(logCode)}");
             Console.ResetColor();
             Console.WriteLine($" {message}");
         }
-        private string LogType(LogCode logCode)
+
+        private string LogTypeToString(LogCode logCode)
         {
             switch (logCode)
             {
@@ -49,6 +68,7 @@ namespace Katsutoshi.Modules
             }
             return "Fatal:";
         }
+
         private void SetConsoleColor(LogCode logCode)
         {
             switch (logCode)
@@ -66,6 +86,11 @@ namespace Katsutoshi.Modules
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     return;
             }
+        }
+
+        private void LogFile(LogCode logCode, string message)
+        {
+
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
