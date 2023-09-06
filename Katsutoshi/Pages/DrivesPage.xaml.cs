@@ -3,6 +3,7 @@ using Katsutoshi.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Katsutoshi.Pages
 {
@@ -15,6 +16,7 @@ namespace Katsutoshi.Pages
 
         private readonly KatsuLogger logger;
 
+
         public DrivesPage()
         {
             InitializeComponent();
@@ -24,6 +26,15 @@ namespace Katsutoshi.Pages
             logger = new KatsuLogger();
 
             Loaded += DrivesPage_Loaded;
+        }
+
+
+        public void DrivesListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if(DrivesListBox.SelectedItem != null)
+            {
+                _viewModel.OpenDriveCommand.Execute(DrivesListBox.SelectedIndex);
+            }
         }
 
         // Drives page loaded

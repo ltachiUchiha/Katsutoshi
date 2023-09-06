@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Modules\KatsuLogger.cs" />
+    <Compile Include="Modules\RelayCommand.cs" />
     <Compile Include="Pages\DrivesPage.xaml.cs">
       <DependentUpon>DrivesPage.xaml</DependentUpon>
     </Compile>
