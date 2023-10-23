@@ -7,15 +7,11 @@ using System.Windows.Input;
 
 namespace Katsutoshi.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для DrivesPage.xaml
-    /// </summary>
     public partial class DrivesPage : Page
     {
         private readonly DrivesViewModel _viewModel;
 
         private readonly KatsuLogger logger;
-
 
         public DrivesPage()
         {
@@ -23,7 +19,7 @@ namespace Katsutoshi.Pages
             _viewModel = new DrivesViewModel();
             DataContext = _viewModel;
 
-            logger = new KatsuLogger();
+            logger = KatsuLogger.Instance;
 
             Loaded += DrivesPage_Loaded;
         }

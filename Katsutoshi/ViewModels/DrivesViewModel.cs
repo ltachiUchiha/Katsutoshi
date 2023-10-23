@@ -12,12 +12,11 @@ namespace Katsutoshi.ViewModels
 {
     public class DrivesViewModel : INotifyPropertyChanged
     {
-        private DrivesModel drivesModel;
-         private readonly KatsuLogger logger;
+        private DrivesModel drivesModel;    
+        private readonly KatsuLogger logger;
 
         // Bindable properties
         public ObservableCollection<DriveInfo> _drives;
-
 
         // Implementation
         public ObservableCollection<DriveInfo> drives { 
@@ -34,7 +33,7 @@ namespace Katsutoshi.ViewModels
         public DrivesViewModel()
         {
             drivesModel = new DrivesModel();
-            logger = new KatsuLogger();
+            logger = KatsuLogger.Instance;
 
             OpenDriveCommand = new RelayCommand(param =>
             {
@@ -49,9 +48,9 @@ namespace Katsutoshi.ViewModels
             {
                 drives = await drivesModel.GetAllDrives();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Log(LogCode.Error, ex.Message);
             }
 
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Katsutoshi.Modules;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,7 @@ namespace Katsutoshi.Models
         // A task that gets and returns all drives in the system
         public async Task<ObservableCollection<DriveInfo>> GetAllDrives()
         {
+            //KatsuLogger.Instance.Log(LogCode.Info, "It's working");
             DriveInfo[] allDrives = await Task.Run(() => DriveInfo.GetDrives());
             return new ObservableCollection<DriveInfo>(allDrives);
         }

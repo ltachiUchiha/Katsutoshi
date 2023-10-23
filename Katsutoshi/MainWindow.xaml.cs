@@ -27,7 +27,7 @@ namespace Katsutoshi
             debugMode = args.Length > 1 ? args[1] == "debug" : false;
             Application.Current.Properties["debugMode"] = debugMode;
 
-            logger = new KatsuLogger();
+            logger = KatsuLogger.Instance;
             logger.Log(LogCode.Info, "Run in debug mode");
 
             StateChanged += new EventHandler(Window_StateChanged);

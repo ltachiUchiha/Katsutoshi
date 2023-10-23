@@ -13,16 +13,13 @@ namespace Katsutoshi.Modules
         private bool _debugConsole;
         private bool _fileLogging = true;
 
-        public KatsuLogger() 
+        private KatsuLogger() 
         {
             try
             {
-                _debugConsole = (bool)App.Current.Properties["debugMode"];
+                _debugConsole = (bool)System.Windows.Application.Current.Properties["debugMode"];
 
-                if(_debugConsole)
-                {
-                    AllocConsole();
-                }
+                if(_debugConsole) { AllocConsole(); }
 
                 if (_fileLogging)
                 {
@@ -32,10 +29,21 @@ namespace Katsutoshi.Modules
                         Directory.CreateDirectory(path);
                     }
                 }
-            }
+            } 
             catch (Exception ex)
             {
                 Log(LogCode.Error, ex.Message);
+            }
+        }
+
+        private static KatsuLogger _Instance;
+        public static KatsuLogger Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                    _Instance = new KatsuLogger();
+                return _Instance;
             }
         }
 
@@ -90,7 +98,7 @@ namespace Katsutoshi.Modules
 
         private void LogFile(LogCode logCode, string message)
         {
-
+            // Not implemented
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]

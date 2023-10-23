@@ -56,11 +56,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\DirectoryPageModel.cs" />
     <Compile Include="Modules\KatsuLogger.cs" />
     <Compile Include="Modules\RelayCommand.cs" />
+    <Compile Include="Pages\DirectoryPage.xaml.cs">
+      <DependentUpon>DirectoryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DrivesPage.xaml.cs">
       <DependentUpon>DrivesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\DirectoryPageViewModel.cs" />
     <Compile Include="ViewModels\DrivesViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -74,6 +79,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\DirectoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\DrivesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
