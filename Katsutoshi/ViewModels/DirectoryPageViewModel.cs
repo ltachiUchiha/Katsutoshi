@@ -1,4 +1,5 @@
-﻿using Katsutoshi.Modules;
+﻿using Katsutoshi.Models;
+using Katsutoshi.Modules;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,11 +14,14 @@ namespace Katsutoshi.ViewModels
 {
     internal class DirectoryPageViewModel : INotifyPropertyChanged
     {
+        private DirectoryPageModel _model;
         private readonly KatsuLogger logger;
 
         // Bindable properties
         public ObservableCollection<DirectoryInfo> _folders;
         public ObservableCollection<FileInfo> _files;
+
+        private string selectedDirectoryPath = "";
 
         // Implementation
         public ObservableCollection<DirectoryInfo> folders
@@ -42,7 +46,21 @@ namespace Katsutoshi.ViewModels
 
         public DirectoryPageViewModel()
         {
+            _model = new DirectoryPageModel();
+            logger = KatsuLogger.Instance;
+        }
 
+        public async Task LoadData()
+        {
+            try
+            {
+                folders = await _model.GetAllDirectories(selectedDirectoryPath);
+                files = await _model.GetAllFiles(selectedDirectoryPath);
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogCode.Error, ex.Message);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
