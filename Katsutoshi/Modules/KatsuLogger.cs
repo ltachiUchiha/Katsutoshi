@@ -10,9 +10,11 @@ namespace Katsutoshi.Modules
 {
     internal class KatsuLogger
     {
+        // Logger settings
         private bool _debugConsole;
         private bool _fileLogging = true;
 
+        // Constructor
         private KatsuLogger() 
         {
             try
@@ -36,6 +38,7 @@ namespace Katsutoshi.Modules
             }
         }
 
+        // Set and get one instance of logger for the entire project
         private static KatsuLogger _Instance;
         public static KatsuLogger Instance
         {
@@ -47,12 +50,14 @@ namespace Katsutoshi.Modules
             }
         }
 
+        // Log message 
         public void Log(LogCode logCode, string message)
         {
             if (_debugConsole)
                 LogConsole(logCode, message);
         }
 
+        // Write log to console
         private void LogConsole(LogCode logCode, string message)
         {
             SetConsoleColor(logCode);
@@ -61,6 +66,7 @@ namespace Katsutoshi.Modules
             Console.WriteLine($" {message}");
         }
 
+        // Return log type as string
         private string LogTypeToString(LogCode logCode)
         {
             switch (logCode)
@@ -77,6 +83,7 @@ namespace Katsutoshi.Modules
             return "Fatal:";
         }
 
+        // Sуtting console color
         private void SetConsoleColor(LogCode logCode)
         {
             switch (logCode)
