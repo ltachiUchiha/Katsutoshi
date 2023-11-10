@@ -20,10 +20,21 @@ namespace Katsutoshi.ViewModels
         // Bindable properties
         public ObservableCollection<DirectoryInfo> _folders;
         public ObservableCollection<FileInfo> _files;
+        public ObservableCollection<object> _foldersAndFiles;
 
-        private string selectedDirectoryPath = "";
+        private string selectedDirectoryPath = Directory.GetCurrentDirectory();
 
         // Implementation
+        public ObservableCollection<object> foldersAndFiles
+        {
+            get => _foldersAndFiles;
+            set
+            {
+                _foldersAndFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<DirectoryInfo> folders
         {
             get => _folders;
@@ -56,6 +67,9 @@ namespace Katsutoshi.ViewModels
             {
                 folders = await _model.GetAllDirectories(selectedDirectoryPath);
                 files = await _model.GetAllFiles(selectedDirectoryPath);
+
+                logger.Log(LogCode.Info, "Test");
+
             }
             catch (Exception ex)
             {

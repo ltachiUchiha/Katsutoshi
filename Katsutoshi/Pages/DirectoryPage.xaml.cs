@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Katsutoshi.Modules;
+using Katsutoshi.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,33 @@ namespace Katsutoshi.Pages
     /// </summary>
     public partial class DirectoryPage : Page
     {
+        private readonly DirectoryPageViewModel _viewModel;
+
+        private readonly KatsuLogger logger;
+
         public DirectoryPage()
         {
             InitializeComponent();
+
+            _viewModel = new DirectoryPageViewModel();
+            DataContext = _viewModel;
+
+            logger = KatsuLogger.Instance;
+
+            Loaded += DirectoryPage_Loaded;
+        }
+
+        private async void DirectoryPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await _viewModel.LoadData();
+                logger.Log(LogCode.Info, "Directory page loaded.");
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogCode.Error, ex.Message);
+            }
         }
     }
 }
