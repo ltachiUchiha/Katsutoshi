@@ -56,7 +56,7 @@ namespace Katsutoshi.Modules
         private void LogConsole(LogCode logCode, string message)
         {
             SetConsoleColor(logCode);
-            Console.Write($"{LogTypeToString(logCode)}");
+            Console.Write($"{DateTime.UtcNow} - {LogTypeToString(logCode)}");
             Console.ResetColor();
             Console.WriteLine($" {message}");
         }
