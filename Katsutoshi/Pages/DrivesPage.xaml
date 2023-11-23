@@ -10,7 +10,7 @@
       Title="DrivesPage">
     <Grid>
         <ListBox Name="DrivesListBox"
-            ItemsSource="{Binding drives}"
+                 ItemsSource="{Binding drives}"
                  MouseDoubleClick="DrivesListBox_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>

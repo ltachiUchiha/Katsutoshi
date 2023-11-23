@@ -2,6 +2,7 @@
 using Katsutoshi.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace Katsutoshi.Pages
         {
             InitializeComponent();
 
-            _viewModel = new DirectoryPageViewModel();
+            _viewModel = new DirectoryPageViewModel(Directory.GetCurrentDirectory());
             DataContext = _viewModel;
 
             logger = KatsuLogger.Instance;

@@ -12,20 +12,20 @@ namespace Katsutoshi.Models
 {
     internal class DirectoryPageModel : INotifyPropertyChanged
     {
-        public async Task<ObservableCollection<DirectoryInfo>> GetAllDirectories(string directoryPath)
+        public async Task<List<FileSystemInfo>> GetAllDirectories(string directoryPath)
         {
             var allDirectories = await Task.Run(() => Directory.GetDirectories(directoryPath)
                 .Select(file => new DirectoryInfo(file)));
 
-            return new ObservableCollection<DirectoryInfo>(allDirectories);
+            return new List<FileSystemInfo>(allDirectories);
         }
 
-        public async Task<ObservableCollection<FileInfo>> GetAllFiles(string directoryPath)
+        public async Task<List<FileSystemInfo>> GetAllFiles(string directoryPath)
         {
             var allFIles = await Task.Run(() => Directory.GetFiles(directoryPath)
                 .Select(file => new FileInfo(file)));
 
-            return new ObservableCollection<FileInfo>(allFIles);
+            return new List<FileSystemInfo>(allFIles);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

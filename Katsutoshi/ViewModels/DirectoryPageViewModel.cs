@@ -18,14 +18,14 @@ namespace Katsutoshi.ViewModels
         private readonly KatsuLogger logger;
 
         // Bindable properties
-        public ObservableCollection<DirectoryInfo> _folders;
-        public ObservableCollection<FileInfo> _files;
-        public ObservableCollection<object> _foldersAndFiles;
+        public List<FileSystemInfo> _folders;
+        public List<FileSystemInfo> _files;
+        public ObservableCollection<FileSystemInfo> _foldersAndFiles = new ObservableCollection<FileSystemInfo>();
 
-        private string selectedDirectoryPath = Directory.GetCurrentDirectory();
+        private string _selectedDirectoryPath;
 
         // Implementation
-        public ObservableCollection<object> foldersAndFiles
+        public ObservableCollection<FileSystemInfo> foldersAndFiles
         {
             get => _foldersAndFiles;
             set
@@ -35,38 +35,33 @@ namespace Katsutoshi.ViewModels
             }
         }
 
-        public ObservableCollection<DirectoryInfo> folders
-        {
-            get => _folders;
-            set
-            {
-                _folders = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<FileInfo> files
-        {
-            get => _files;
-            set
-            {
-                _files = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public DirectoryPageViewModel()
+        public DirectoryPageViewModel(string selectedDirectoryPath)
         {
             _model = new DirectoryPageModel();
             logger = KatsuLogger.Instance;
+
+            _selectedDirectoryPath = selectedDirectoryPath;
         }
 
         public async Task LoadData()
         {
             try
             {
-                folders = await _model.GetAllDirectories(selectedDirectoryPath);
-                files = await _model.GetAllFiles(selectedDirectoryPath);
+                _folders = await _model.GetAllDirectories(_selectedDirectoryPath);
+                _files = await _model.GetAllFiles(_selectedDirectoryPath);
+                _folders.AddRange(_files);
+                foldersAndFiles = new ObservableCollection<FileSystemInfo>(_folders);
+
+                /*
+                foreach (var folder in folders)
+                {
+                    foldersAndFiles.Add(folder);
+                }
+                foreach (var file in files)
+                {
+                    foldersAndFiles.Add(file);
+                }
+                */
 
                 logger.Log(LogCode.Info, "Test");
 
@@ -80,6 +75,7 @@ namespace Katsutoshi.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
+            logger.Log(LogCode.Info, "Some changes");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }

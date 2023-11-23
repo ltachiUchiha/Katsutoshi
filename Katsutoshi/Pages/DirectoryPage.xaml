@@ -10,7 +10,7 @@
       Title="DirectoryPage">
     <Grid>
         <ListBox Name="DirectoryListBox"
-                 ItemsSource="{Binding files}">
+                 ItemsSource="{Binding foldersAndFiles}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
